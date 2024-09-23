@@ -163,3 +163,4 @@ cython_debug/
 
 .DS_Store
 user_creds/
+venv/

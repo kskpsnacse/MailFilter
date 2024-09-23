@@ -22,7 +22,7 @@ def __get_credentials(user_id: int) -> Optional[Credentials]:
             flow: InstalledAppFlow = InstalledAppFlow.from_client_secrets_file(
                 f"user_creds/credentials.json", __SCOPES
             )
-            creds = flow.run_local_server(port=0)
+            creds = flow.run_local_server(port=8990)
         if creds:
             with open(f"user_creds/{user_id}_token.json", "w") as token_file:
                 token_file.write(creds.to_json())
