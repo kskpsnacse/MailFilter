@@ -1,0 +1,54 @@
+[
+  {
+    "matching_type": "ANY",
+    "conditions": [
+      {
+        "field": {
+          "name": "subject",
+          "display_name": "Subject",
+          "data_type": "STRING"
+        },
+        "operator": "CONTAINS",
+        "value": ["Invoice"]
+      },
+      {
+        "field": {
+          "name": "from_address",
+          "display_name": "From",
+          "data_type": "STRING"
+        },
+        "operator": "CONTAINS",
+        "value": ["email.apple.com"]
+      }
+    ],
+    "actions": [
+      { "action_type": "MARK_AS_READ" }
+    ]
+  },
+  {
+    "matching_type": "ALL",
+    "conditions": [
+      {
+        "field": {
+          "name": "mail_sent_at",
+          "display_name": "Received Date",
+          "data_type": "DATE"
+        },
+        "operator": "GREATER_THAN",
+        "value": ["2024-09-21"]
+      },
+      {
+        "field": {
+          "name": "subject",
+          "display_name": "Subjecte",
+          "data_type": "STRING"
+        },
+        "operator": "CONTAINS",
+        "value": ["Linkedin"]
+      }
+    ],
+    "actions": [
+      { "action_type": "MOVE_TO", "config": "INBOX" }
+    ]
+  }
+]
