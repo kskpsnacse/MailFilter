@@ -74,7 +74,6 @@ def get_users(ids: list[int]) -> list[UserDTO]:
     finally:
         session.close()
 
-
 def mark_auth_error(user_id: int) -> None:
     session: Session = session_manager.get_session()
     try:
@@ -82,6 +81,35 @@ def mark_auth_error(user_id: int) -> None:
         if user_stats:
             user_stats.auth_status = UserAuthStatus.ERROR
             session.commit()
-            os.remove("user_creds/1_token.json");
+    finally:
+        session.close()
+
+def __add_user_stats(user: User):
+    session: Session = session_manager.get_session()
+    try:
+        user_stat: UserStats = UserStats(
+            user_id=user.id, auth_status=UserAuthStatus.SUCCESS,sync_status=UserSyncStatus.READY_TO_FULL_SYNC
+        )
+        session.add(user_stat)
+        session.commit()
+    finally:
+        session.close()
+
+def add_or_update_user(email: str) -> UserDTO:
+    session: Session = session_manager.get_session()
+    try:
+        user: Optional[User] = session.query(User).filter(User.email == email).first()
+        user_stat: Optional[UserStats]
+        if not user:
+            user = User(email = email, mail_server_type = MailServerType.GMAIL)
+            session.add(user)
+            session.commit()
+            __add_user_stats(user)
+        else:
+            user_stat = session.query(UserStats).filter(UserStats.user_id == user.id).first()
+            if user_stat:
+                user_stat.auth_status = UserAuthStatus.SUCCESS
+            session.commit()
+        return covert_model_to_dto(user)
     finally:
         session.close()

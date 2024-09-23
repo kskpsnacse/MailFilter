@@ -22,7 +22,7 @@
       }
     ],
     "actions": [
-      { "action_type": "MARK_AS_UNREAD" }
+      { "action_type": "MARK_AS_READ" }
     ]
   },
   {

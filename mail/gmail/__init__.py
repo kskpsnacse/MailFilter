@@ -7,22 +7,34 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build, Resource
 from googleapiclient.http import BatchHttpRequest
 
+from exceptions import MailServerAuthError
+from user.service import get_users
+
 __SCOPES: list[str] = [
     "https://mail.google.com/", "https://www.googleapis.com/auth/userinfo.profile"
 ]
 
+def get_cred_by_login() -> tuple[str, Credentials]:
+    flow: InstalledAppFlow = InstalledAppFlow.from_client_secrets_file(
+        f"user_creds/credentials.json", __SCOPES
+    )
+    creds = flow.run_local_server(port=8990)
+    service: Resource = build("gmail", "v1", credentials=creds)
+    email: str = service.users().getProfile(userId='me').execute().get('emailAddress')
+    return (email, creds)
+    
 def __get_credentials(user_id: int) -> Optional[Credentials]:
     creds: Optional[Credentials] = None
+    email: str
     if os.path.exists(f"user_creds/{user_id}_token.json"):
         creds = Credentials.from_authorized_user_file(f"user_creds/{user_id}_token.json", __SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow: InstalledAppFlow = InstalledAppFlow.from_client_secrets_file(
-                f"user_creds/credentials.json", __SCOPES
-            )
-            creds = flow.run_local_server(port=8990)
+            email, creds = get_cred_by_login()
+            if get_users([user_id])[0].email != email:
+                raise MailServerAuthError(ValueError(), user_id)
         if creds:
             with open(f"user_creds/{user_id}_token.json", "w") as token_file:
                 token_file.write(creds.to_json())

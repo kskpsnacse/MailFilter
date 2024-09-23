@@ -164,3 +164,4 @@ cython_debug/
 .DS_Store
 user_creds/
 venv/
+mail_filter.db

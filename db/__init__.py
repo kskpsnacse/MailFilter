@@ -115,15 +115,8 @@ __create_indexes = [
 
 for index_query in __create_indexes:
     __cursor.execute(index_query)
-try:
-    __cursor.execute('insert into users(email, mail_server_type) values("kskpsnacse@gmail.com", "GMAIL")');
-    __cursor.execute('insert into user_stats(user_id, auth_status, sync_status) values(1, "SUCCESS", "READY_TO_FULL_SYNC")');
-except Exception as e:
-    print(e)
-
 __connection.commit()
 __connection.close()
-
 print("Tables and indexes created successfully!")
 
 Base: Any = declarative_base()
