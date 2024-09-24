@@ -33,7 +33,7 @@ __NUMERIC_OPERATORS = [
     OperatorType.BETWEEN, OperatorType.GREATER_THAN, OperatorType.EQUALS
 ]
 DATA_TYPE_OPERATOR_MAP: dict[FieldDataType, list[OperatorType]] = {
-    FieldDataType.STRING: [OperatorType.CONTAINS, OperatorType.NOT_EQUALS, OperatorType.NOT_CONTAINS],
+    FieldDataType.STRING: [OperatorType.CONTAINS, OperatorType.NOT_EQUALS, OperatorType.NOT_CONTAINS, OperatorType.EQUALS],
     FieldDataType.DATE: __NUMERIC_OPERATORS,
     FieldDataType.DATETIME: __NUMERIC_OPERATORS,
     FieldDataType.NUMERIC: __NUMERIC_OPERATORS
