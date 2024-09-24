@@ -18,4 +18,4 @@ select
     left join completed_actions ca on ca.action_id = a.id
     where completed is not null
     order by a.id desc
-    limit 10;
+    limit 20;
