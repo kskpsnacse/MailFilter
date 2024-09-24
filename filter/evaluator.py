@@ -10,8 +10,15 @@ def __compare_values(
         if isinstance(condition_values[0], str) :
             return condition_values[0].lower() in field_value.lower()
     
+    if isinstance(field_value, str) and operator == OperatorType.NOT_CONTAINS:
+        if isinstance(condition_values[0], str) :
+            return condition_values[0].lower() not in field_value.lower()
+    
     elif operator == OperatorType.NOT_EQUALS:
         return str(condition_values[0]).lower() != str(field_value).lower()
+    
+    elif operator == OperatorType.EQUALS:
+        return str(condition_values[0]).lower() == str(field_value).lower()
     
     elif isinstance(field_value, float) and operator == OperatorType.LESS_THAN:
         if isinstance(condition_values[0], float):
