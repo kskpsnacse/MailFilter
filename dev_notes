@@ -9,4 +9,13 @@ select
     user_id, a.id
     from actions a
     join mails m on a.mail_id = m.id
-    join users u on u.id = m.user_id
+    join users u on u.id = m.user_id;
+
+select
+    a.id, m.id, a.type, a.config, a.created_at, m.subject, ca.id as completed
+    from actions a
+    join mails m on m.id = a.mail_id
+    left join completed_actions ca on ca.action_id = a.id
+    where completed is not null
+    order by a.id desc
+    limit 10;

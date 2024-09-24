@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from typing import Optional
 from mail import AbstractMailFetcher, FilteredMail, MailServerType, AbstractMailOperations, MailDTO
@@ -38,7 +38,9 @@ def start_sync() -> None:
         elif user.sync_status == UserSyncStatus.FULL_SYNC_DONE:
             last_sync_time: Optional[datetime] = get_last_sync_time(user.id)
             if last_sync_time:
-                mail_fetcher.sync_live_emails(user.id, last_sync_time, lambda x: save(user.id, x))
+                mail_fetcher.sync_live_emails(
+                    user.id, last_sync_time - timedelta(minutes = 2), lambda x: save(user.id, x)
+                )
                 update_last_sync_time(user.id, current_time)
 
 def mark_as_filtered(ids: list[int], session: Session) -> None:
