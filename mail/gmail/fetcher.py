@@ -10,7 +10,7 @@ from mail.gmail.processor import get_list_from_thread
 
 class GmailFetcher(AbstractMailFetcher):
     __THREAD_ID_MAX_RESULTS: int = 700
-    __THREAD_MAX_RESULTS: int = 18
+    __THREAD_MAX_RESULTS: int = 20
     __MESSAGE_LIST_MAX_RESULTS: int = 500
 
     def do_full_sync(self, user_id: int, msg_list_saver: Callable[[list[MailDTO]], None]) -> None:

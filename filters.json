@@ -1,6 +1,6 @@
 [
   {
-    "matching_type": "ANY",
+    "matching_type": "ALL",
     "conditions": [
       {
         "field": {
@@ -13,12 +13,12 @@
       },
       {
         "field": {
-          "name": "from_address",
-          "display_name": "From",
-          "data_type": "STRING"
+          "name": "mail_sent_at",
+          "display_name": "Received Date",
+          "data_type": "DATE"
         },
-        "operator": "CONTAINS",
-        "value": ["email.apple.com"]
+        "operator": "NOT_EQUALS",
+        "value": ["2024-09-24"]
       }
     ],
     "actions": [
@@ -40,7 +40,7 @@
       {
         "field": {
           "name": "subject",
-          "display_name": "Subjecte",
+          "display_name": "Subject",
           "data_type": "STRING"
         },
         "operator": "CONTAINS",
@@ -49,6 +49,23 @@
     ],
     "actions": [
       { "action_type": "MOVE_TO", "config": "INBOX" }
+    ]
+  },
+  {
+    "matching_type": "ALL",
+    "conditions": [
+      {
+        "field": {
+          "name": "mail_sent_at",
+          "display_name": "Received Date",
+          "data_type": "DATE"
+        },
+        "operator": "EQUALS",
+        "value": ["2024-09-24"]
+      }
+    ],
+    "actions": [
+      { "action_type": "MARK_AS_READ" }
     ]
   }
 ]

@@ -21,16 +21,19 @@ class FieldDataType(Enum):
 
 class OperatorType(Enum):
     CONTAINS = "CONTAINS"
+    NOT_CONTAINS = "NOT_CONTAINS"
     NOT_EQUALS = "NOT_EQUALS"
+    EQUALS = "EQUALS"
     LESS_THAN = "LESS_THAN"
     GREATER_THAN = "GREATER_THAN"
     BETWEEN = "BETWEEN"
 
 __NUMERIC_OPERATORS = [
-    OperatorType.LESS_THAN, OperatorType.NOT_EQUALS, OperatorType.BETWEEN, OperatorType.GREATER_THAN
+    OperatorType.LESS_THAN, OperatorType.NOT_EQUALS,
+    OperatorType.BETWEEN, OperatorType.GREATER_THAN, OperatorType.EQUALS
 ]
 DATA_TYPE_OPERATOR_MAP: dict[FieldDataType, list[OperatorType]] = {
-    FieldDataType.STRING: [OperatorType.CONTAINS, OperatorType.NOT_EQUALS],
+    FieldDataType.STRING: [OperatorType.CONTAINS, OperatorType.NOT_EQUALS, OperatorType.NOT_CONTAINS],
     FieldDataType.DATE: __NUMERIC_OPERATORS,
     FieldDataType.DATETIME: __NUMERIC_OPERATORS,
     FieldDataType.NUMERIC: __NUMERIC_OPERATORS

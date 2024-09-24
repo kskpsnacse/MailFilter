@@ -10,7 +10,7 @@ from mail.gmail import get_gmail_api_service, execute_in_batch
 
 
 class GmailOperations(AbstractMailOperations):
-    __MESSAGE_MODIFY_API_BATCH_SIZE: int = 40
+    __MESSAGE_MODIFY_API_BATCH_SIZE: int = 15
     
     def mark_as_read(
         self, user_id: int, resources: list[MailActionResourceDTO],
