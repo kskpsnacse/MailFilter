@@ -1,6 +1,6 @@
 [
   {
-    "matching_type": "ANY",
+    "matching_type": "ALL",
     "conditions": [
       {
         "field": {
@@ -13,12 +13,12 @@
       },
       {
         "field": {
-          "name": "from_address",
-          "display_name": "From",
-          "data_type": "STRING"
+          "name": "mail_sent_at",
+          "display_name": "Received Date",
+          "data_type": "DATE"
         },
-        "operator": "CONTAINS",
-        "value": ["email.apple.com"]
+        "operator": "NOT_EQUALS",
+        "value": ["2024-09-24"]
       }
     ],
     "actions": [
@@ -56,12 +56,12 @@
     "conditions": [
       {
         "field": {
-          "name": "subject",
-          "display_name": "Subject",
-          "data_type": "STRING"
+          "name": "mail_sent_at",
+          "display_name": "Received Date",
+          "data_type": "DATE"
         },
-        "operator": "NOT_CONTAINS",
-        "value": ["Linkedin"]
+        "operator": "EQUALS",
+        "value": ["2024-09-24"]
       }
     ],
     "actions": [
